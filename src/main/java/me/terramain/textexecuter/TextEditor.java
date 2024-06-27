@@ -1,4 +1,4 @@
-package terramain.textexecuter;
+package me.terramain.textexecuter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +76,18 @@ public class TextEditor {
                 stringBuilder.append(character);
             }
         });
+        saveStringBuilder();
+    }
+    public void replaceChar(char c, char newChar){
+        int i = 0;
+        textIterator.previous();
+        while (textIterator.hasNext()){
+            char character = textIterator.next();
+            if (character==c){
+                stringBuilder.setCharAt(i,newChar);
+            }
+            i++;
+        }
         saveStringBuilder();
     }
 }

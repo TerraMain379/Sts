@@ -1,4 +1,4 @@
-package terramain.textexecuter;
+package me.terramain.textexecuter;
 
 public class Line {
     private String text;

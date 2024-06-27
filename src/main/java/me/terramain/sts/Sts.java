@@ -1,4 +1,4 @@
-package terramain.sts;
+package me.terramain.sts;
 
 import me.terramain.sts.exceptions.StsException;
 import me.terramain.sts.execute.conditions.Condition;
@@ -17,7 +17,7 @@ public class Sts {
         if (c=='t') return '\t';
         if (c=='r') return '\r';
         if (c=='b') return '\b';
-        return c;
+        return 0;
     }
 
     public static List<Result> executeText(String text, String stsCode){

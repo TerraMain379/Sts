@@ -1,21 +1,14 @@
-package terramain.sts.stsblocks;
+package me.terramain.sts.stsblocks;
 
 import me.terramain.sts.StsBlocks;
 import me.terramain.sts.StsSaveData;
 import me.terramain.textexecuter.StaticTextEditor;
 
 public class StsBlockRepeat extends StsBlockStorage{
-    private StsValueBlock loopCounterBlock;
-    public StsBlockRepeat(StsSaveData saveData, StsBlocks stsBlocks, StsValueBlock loopCounterBlock) {
-        super(saveData, stsBlocks);
-        this.loopCounterBlock = loopCounterBlock;
-    }
+    private StsBlock loopCounterBlock;
     public StsBlockRepeat(StsSaveData saveData, StsBlocks stsBlocks, StsBlock loopCounterBlock) {
         super(saveData, stsBlocks);
-        if (loopCounterBlock instanceof StsValueBlock) {
-            this.loopCounterBlock = (StsValueBlock) loopCounterBlock;
-        }
-        else this.loopCounterBlock = null;
+        this.loopCounterBlock = loopCounterBlock;
     }
     public StsBlockRepeat(StsSaveData saveData, StsBlocks stsBlocks) {
         super(saveData, stsBlocks);
@@ -43,7 +36,7 @@ public class StsBlockRepeat extends StsBlockStorage{
         return stringBuilder.toString();
     }
 
-    public StsValueBlock getLoopCounterBlock() {
+    public StsBlock getLoopCounterBlock() {
         return loopCounterBlock;
     }
 }

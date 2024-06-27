@@ -1,4 +1,4 @@
-package terramain.sts.description;
+package me.terramain.sts.description;
 
 import me.terramain.sts.Sts;
 import me.terramain.textexecuter.TextIterator;
@@ -43,6 +43,7 @@ public class StsDescription {
         TextIterator textIterator = new TextIterator(getText());
         boolean flag = true;
         while (flag){
+            if (textIterator.getChar()==null) break;
             char c = textIterator.getChar();
             if (c=='+'){
                 textIterator.next();
@@ -87,7 +88,15 @@ public class StsDescription {
                     descriptionRules.setMinChars(num);
                 }
             }
-            if (textIterator.getChar()==null) flag = false;
+            else if (c=='@'){
+                if (textIterator.next()=='N'){
+                    descriptionRules.isNumber=true;
+                }
+                else if (textIterator.getChar()=='F'){
+                    descriptionRules.strictEnd=true;
+                }
+                textIterator.next();
+            }
         }
         return this.descriptionRules;
     }
@@ -108,7 +117,7 @@ public class StsDescription {
                 }
             }
             else {
-                for (char testC:"+-<>^[]'`\"!".toCharArray()){
+                for (char testC:"+-<>^[]'`\"!@".toCharArray()){
                     if (testC==c){
                         flag=false;
                         break;

@@ -1,4 +1,4 @@
-package terramain.sts.stsblocks;
+package me.terramain.sts.stsblocks;
 
 import me.terramain.sts.StsSaveData;
 import me.terramain.sts.description.StsDescription;

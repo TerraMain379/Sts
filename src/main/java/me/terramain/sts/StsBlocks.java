@@ -1,4 +1,4 @@
-package terramain.sts;
+package me.terramain.sts;
 
 import me.terramain.sts.stsblocks.StsBlock;
 import me.terramain.textexecuter.StaticTextEditor;

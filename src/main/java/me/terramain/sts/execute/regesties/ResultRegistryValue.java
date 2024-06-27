@@ -1,4 +1,4 @@
-package terramain.sts.execute.regesties;
+package me.terramain.sts.execute.regesties;
 
 public class ResultRegistryValue {
     private Object object;
@@ -50,6 +50,10 @@ public class ResultRegistryValue {
 
     public ResultRegistryValueType getRegistryValueType() {
         return registryValueType;
+    }
+
+    public boolean isNull(){
+        return registryValueType==ResultRegistryValueType.NULL;
     }
 
 

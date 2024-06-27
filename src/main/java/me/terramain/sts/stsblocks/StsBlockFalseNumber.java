@@ -1,10 +1,17 @@
-package terramain.sts.stsblocks;
+package me.terramain.sts.stsblocks;
 
 import me.terramain.sts.StsSaveData;
 
-public class StsBlockFalseNumber extends StsValueBlock {
+public class StsBlockFalseNumber extends StsBlock {
+    protected int value;
+
     public StsBlockFalseNumber(StsSaveData saveData, int value) {
-        super(saveData, value);
+        super(saveData);
+        this.value=value;
+    }
+
+    public int getValue() {
+        return value;
     }
 
     @Override
@@ -12,8 +19,4 @@ public class StsBlockFalseNumber extends StsValueBlock {
         return null;
     }
 
-    @Override
-    public int getValue() {
-        return value;
-    }
 }

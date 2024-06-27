@@ -1,4 +1,4 @@
-package terramain.sts.execute.regesties;
+package me.terramain.sts.execute.regesties;
 
 public enum ResultRegistryValueType {
     STRING,

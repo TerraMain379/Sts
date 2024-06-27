@@ -1,4 +1,4 @@
-package terramain.textexecuter;
+package me.terramain.textexecuter;
 
 import java.io.*;
 

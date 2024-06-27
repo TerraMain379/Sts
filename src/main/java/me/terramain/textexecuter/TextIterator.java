@@ -1,4 +1,4 @@
-package terramain.textexecuter;
+package me.terramain.textexecuter;
 
 import java.util.Iterator;
 import java.util.function.Consumer;

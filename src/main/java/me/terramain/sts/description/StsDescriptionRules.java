@@ -1,4 +1,4 @@
-package terramain.sts.description;
+package me.terramain.sts.description;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,9 @@ public class StsDescriptionRules {
     public List<Character> endChars;
     public int minChars;
     public int maxChars;
+
+    public boolean isNumber;
+    public boolean strictEnd;
 
 
     public static final byte UNLOCK_CHARS = 1;
@@ -22,14 +25,11 @@ public class StsDescriptionRules {
         this.endChars = new ArrayList<>();
         this.minChars=0;
         this.maxChars=-1;
+        this.isNumber=false;
     }
 
     public void addUnlockChar(char c){
-        for (Character unlockChar : unlockChars) {
-            if (c==unlockChar){
-                return;
-            }
-        }
+        if (unlockChars.contains(c)) return;
         unlockChars.add(c);
     }
     public void removeUnlockChar(char c){
@@ -78,6 +78,7 @@ public class StsDescriptionRules {
     }
 
     public boolean testChar(char c){
+        if (unlockChars.size()==0) return true;
         return unlockChars.contains(c);
     }
 }

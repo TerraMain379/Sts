@@ -1,3 +1,4 @@
+package me.terramain;
 
 import me.terramain.sts.Sts;
 import me.terramain.sts.StsReader;
@@ -12,8 +13,7 @@ public class Main {
     }
     public static void execute(){
         TextEditor stringBuilder = new TextEditor(TextHelper.readFile("sts.txt"));
-        stringBuilder.stripLines();
-        stringBuilder.removeChar('\n');
+        stringBuilder.replaceChar('\n',' ');
         String text = stringBuilder.getText();
         stringBuilder = new TextEditor(TextHelper.readFile("sts2.txt"));
         stringBuilder.stripLines();

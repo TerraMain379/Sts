@@ -1,4 +1,4 @@
-package terramain.sts.execute.conditions;
+package me.terramain.sts.execute.conditions;
 
 import me.terramain.sts.StsBlocks;
 import me.terramain.sts.execute.regesties.Result;

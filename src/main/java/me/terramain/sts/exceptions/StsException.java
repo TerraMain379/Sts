@@ -1,4 +1,4 @@
-package terramain.sts.exceptions;
+package me.terramain.sts.exceptions;
 
 public class StsException extends Exception {
     public StsException(String message) {

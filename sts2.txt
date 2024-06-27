@@ -1,1 +1,36 @@
-*4{_<2:>"a"}"b"
+/vspaces{
+    ?{
+        [@F+\v]
+    }
+}/
+/spaces{
+    [@F+\v^>1]
+}/
+
+
+*{
+    |{
+        (""_<F:>0)
+        ("public"_<F:>0)
+        ("private"_<F:>1)
+        ("protected"_<F:>2)
+    }
+    /spaces/
+    _<f:>?{
+        "abstract"
+        /spaces/
+    }
+    _<f:>?{
+        "static"
+        /spaces/
+    }
+    _<f:>[+\l_^>1]
+    /spaces/
+    _<f:>[+\l_^>1]
+    /vspaces/"("/vspaces/
+        _<f:>{$\sqF}
+    /vspaces/")"/vspaces/
+    "{"/vspaces/
+        _<f:>{$\sqF}
+    /vspaces/"}"/vspaces/
+}

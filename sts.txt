@@ -1,1 +1,8 @@
-aaaab
+public abstract static void main(String[] args){
+    System.out.print("hello[]"+"world(((\"");
+}
+
+static void main(String[] args){
+    System.out.print("hello[]"+"world(((\"");
+}
+#

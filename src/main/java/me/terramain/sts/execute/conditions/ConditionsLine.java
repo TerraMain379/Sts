@@ -1,4 +1,4 @@
-package terramain.sts.execute.conditions;
+package me.terramain.sts.execute.conditions;
 
 import me.terramain.sts.StsBlocks;
 import me.terramain.sts.execute.regesties.Result;
@@ -50,7 +50,18 @@ public class ConditionsLine {
                 return newCondition.getResult().isSuccess();
             }).toList();
             blockNumber++;
-            conditions=newConditions;
+
+            conditions=new ArrayList<>();
+            newConditions.forEach(newCondition -> {
+                boolean flag2 = true;
+                for (Condition condition : conditions) {
+                    if (condition.equals(newCondition)) {
+                        flag2 = false;
+                        break;
+                    }
+                }
+                if (flag2) conditions.add(newCondition);
+            });
         }
     }
 

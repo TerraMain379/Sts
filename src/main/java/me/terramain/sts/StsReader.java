@@ -1,4 +1,4 @@
-package terramain.sts;
+package me.terramain.sts;
 
 import me.terramain.sts.exceptions.StsException;
 import me.terramain.sts.stsblocks.*;
@@ -160,33 +160,54 @@ public class StsReader {
                 return null;
             }
         }
+        else if (c=='N'){
+            textIterator.next();
+            return new StsBlockNull(saveData);
+        }
         else if (Character.isDigit(c)){
             return new StsBlockFalseNumber(saveData,textIterator.readInt());
         }
         else {
-            StsException.say("Wrong char from sts-code. Position " + textIterator.getCharNumber());
+            StsException.say("Wrong char ('"+c+"') from sts-code. Position " + textIterator.getCharNumber());
         }
         return null;
     }
     private StsSaveData readSaveData(TextIterator textIterator){
-        if (textIterator.getNextCharAt(1)=='<'){
-            textIterator.nextAt(2);
+        int registryNum = 0;
+        int valueNum = -1;
+
+        if (textIterator.next() != '<'){
+            return new StsSaveData(registryNum,valueNum);
         }
         else {
-            textIterator.next();
-            return new StsSaveData(0);
+            if (Character.isDigit(textIterator.next())){
+                registryNum=textIterator.readInt();
+            }
+            else {
+                registryNum = StsSaveData.getPathFromChar(textIterator.getChar());
+                textIterator.next();
+            }
+            if (textIterator.getChar() == ':'){
+                if (textIterator.next() != '>') {
+                    if (Character.isDigit(textIterator.getChar())){
+                        valueNum=textIterator.readInt();
+                        textIterator.next();
+                    }
+                    else {
+                        valueNum = StsSaveData.getPathFromChar(textIterator.getChar());
+                        textIterator.nextAt(2);
+                    }
+                }
+                else {
+                    textIterator.next();
+                }
+            }
+            else {
+                valueNum = registryNum;
+                registryNum = 0;
+            }
         }
-        int registry=0;
-        int number=-1;
-
-        if (textIterator.getChar()!=':'){
-            registry=textIterator.readInt();
-        }
-        if (textIterator.next()!='>'){
-            number=textIterator.readInt();
-        }
-        textIterator.next();
-        return new StsSaveData(registry,number);
+        return new StsSaveData(registryNum,valueNum);
     }
     public StsBlocks getStsBlocks() {
         return stsBlocks;

@@ -1,7 +1,8 @@
-package terramain.sts.execute.conditions;
+package me.terramain.sts.execute.conditions;
 
 import me.terramain.sts.StsBlocks;
 import me.terramain.sts.description.StsDescriptionRules;
+import me.terramain.sts.exceptions.StsException;
 import me.terramain.sts.execute.regesties.Result;
 import me.terramain.sts.execute.regesties.ResultRegistryValue;
 import me.terramain.sts.stsblocks.*;
@@ -26,7 +27,12 @@ public class Condition {
         this.nextStsBlock = nextStsBlock;
 
         if (stsBlock instanceof StsBlockText stsBlockText){
-            return executeBlockText(stsBlockText);
+            if (stsBlock instanceof StsBlockCloseCode stsBlockCloseCode){
+                return executeBlockCloseCode(stsBlockCloseCode);
+            }
+            else {
+                return executeBlockText(stsBlockText);
+            }
         }
         else if (stsBlock instanceof StsBlockStorage stsBlockStorage){
             if (stsBlockStorage instanceof StsBlockPossible stsBlockPossible){
@@ -45,12 +51,20 @@ public class Condition {
         else if (stsBlock instanceof StsBlockDescription stsBlockDescription){
             return executeBlockDescription(stsBlockDescription);
         }
-        else if (stsBlock instanceof StsBlockCloseCode stsBlockCloseCode){
-            return executeBlockCloseCode(stsBlockCloseCode);
+        else if (stsBlock instanceof StsBlockFalseNumber stsBlockFalseNumber){
+            return executeBlockFalseNumber(stsBlockFalseNumber);
+        }
+        else if (stsBlock instanceof StsBlockNull stsBlockNull){
+            return executeBlockNull(stsBlockNull);
+        }
+        else {
+            //System.out.println("StsBlock not supported");
+            StsException.say("StsBlock not supported");
         }
 
         return List.of(new Condition(nextStsBlock, textIterator, result));
     }
+
     private List<Condition> executeBlockText(StsBlockText stsBlockText){
         String blockText = stsBlockText.getText();
         String readText = textIterator.readStringFromLength(blockText.length());
@@ -64,7 +78,6 @@ public class Condition {
                 new Condition(nextStsBlock, textIterator, result)
         );
     }
-
     private List<Condition> executeStsBlocks(StsBlocks stsBlocks){
         ConditionsLine conditionsLine = new ConditionsLine(
                 stsBlocks,
@@ -131,6 +144,9 @@ public class Condition {
                         stsBlockOptions.getSaveData(),
                         new ResultRegistryValue(conditionsLineNumber)
                 );
+                newCondition.result.setLoopsMessage(
+                        conditionsLineNumber
+                );
                 newConditions.add(newCondition);
             }
             conditionsLineNumber++;
@@ -144,16 +160,35 @@ public class Condition {
         return newConditions;
     }
     private List<Condition> executeBlockRepeat(StsBlockRepeat stsBlockRepeat){
+        StsBlock stsBlockCounter = stsBlockRepeat.getLoopCounterBlock();
+        if (stsBlockCounter==null) {
+            return executeBlockRepeat(stsBlockRepeat, false, 0);
+        }
+        else {
+            ConditionsLine conditionsLine = new ConditionsLine(
+                    new StsBlocks(List.of(stsBlockCounter)),
+                    textIterator
+            );
+            conditionsLine.execute(result);
+            List<Condition> newConditions = new ArrayList<>();
+            for (Condition condition : conditionsLine.conditions) {
+                Integer loopsCounter = condition.result.getLoopsMessage();
+                if (condition.result.getLoopsMessage() != null) {
+                    newConditions.addAll(
+                            condition.executeBlockRepeat(
+                                    stsBlockRepeat, true, loopsCounter
+                            )
+                    );
+                }
+            }
+            newConditions.forEach(condition -> condition.stsBlock=nextStsBlock);
+            return newConditions;
+        }
+    }
+    private List<Condition> executeBlockRepeat(StsBlockRepeat stsBlockRepeat, boolean activeLoopsCounter, int loopsCounter){
         List<Condition> newConditions = new ArrayList<>();
         List<Condition> conditionsToNext = new ArrayList<>();
         conditionsToNext.add(new Condition(stsBlock,textIterator,result));
-
-        boolean activeLoopsCounter = false;
-        int loopsCounter = 0;
-        if (stsBlockRepeat.getLoopCounterBlock()!=null){
-            activeLoopsCounter = true;
-            loopsCounter = stsBlockRepeat.getLoopCounterBlock().getValue();
-        }
 
         boolean flag = true;
         int loops = 1;
@@ -168,13 +203,14 @@ public class Condition {
                 flag=false;
             }
             else {
-                conditionsToNext.forEach(conditionToNext -> {
-                    conditionsLines.add(new ConditionsLine(
+                for (Condition condition : conditionsToNext) {
+                    ConditionsLine conditionsLine = new ConditionsLine(
                             stsBlockRepeat.getStsBlocks(),
-                            conditionToNext.getTextIterator()
-                    ));
-                    conditionsLines.get(conditionsLines.size()-1).execute(conditionToNext.result);
-                });
+                            condition.getTextIterator()
+                    );
+                    conditionsLine.execute(condition.result);
+                    conditionsLines.add(conditionsLine);
+                }
                 conditionsToNext.clear();
                 List<Condition> conditionsToNew = new ArrayList<>();
                 for (ConditionsLine conditionsLine : conditionsLines) {
@@ -188,18 +224,22 @@ public class Condition {
                                 stsBlockRepeat.getSaveData(),
                                 new ResultRegistryValue(loops)
                         );
+                        conditionToNew.result.setLoopsMessage(
+                                loops
+                        );
                         conditionsToNext.add(conditionToNext);
                         conditionsToNew.add(conditionToNew);
                     }
                 }
-                newConditions.addAll(conditionsToNew);
+                if (!activeLoopsCounter || loops == loopsCounter) {
+                    newConditions.addAll(conditionsToNew);
+                }
             }
             loops++;
         }
         newConditions.forEach(condition -> condition.stsBlock=nextStsBlock);
         return newConditions;
     }
-
     private List<Condition> executeBlockDescription(StsBlockDescription stsBlockDescription){
 
         List<Condition> newConditions = new ArrayList<>();
@@ -207,26 +247,45 @@ public class Condition {
         StsDescriptionRules stsDescriptionRules = stsBlockDescription.getStsDescription().readRules();
 
         boolean flag = true;
-        int chars = 0;
+        int charNum = 0;
         StringBuilder stringBuilder = new StringBuilder();
         while (flag){
             if (textIterator.getChar()==null) break;
             char c = textIterator.getChar();
-            stringBuilder.append(c);
 
-            if (chars==0 && !stsDescriptionRules.testStartWith(c)) flag = false;
+            if (charNum==0 && !stsDescriptionRules.testStartWith(c)) flag = false;
             else if (!stsDescriptionRules.testChar(c)) flag = false;
-            else if (!stsDescriptionRules.testMaxChars(chars)) flag = false;
-            else if (stsDescriptionRules.testMinChars(chars)){
+            else if (!stsDescriptionRules.testMaxChars(charNum+1)) flag = false;
+            else if (stsDescriptionRules.testMinChars(charNum+1)){
+                stringBuilder.append(c);
                 textIterator.next();
                 Condition newCondition = new Condition(nextStsBlock,textIterator,result);
-                newCondition.result.executeSaveData(
-                        stsBlockDescription.getSaveData(),
-                        new ResultRegistryValue(stringBuilder.toString()));
+                if (stsDescriptionRules.isNumber) {
+                    int value = Integer.parseInt(stringBuilder.toString());
+                    newCondition.result.executeSaveData(
+                            stsBlockDescription.getSaveData(),
+                            new ResultRegistryValue(value)
+                    );
+                    newCondition.result.setLoopsMessage(value);
+                }
+                else {
+                    newCondition.result.executeSaveData(
+                            stsBlockDescription.getSaveData(),
+                            new ResultRegistryValue(stringBuilder.toString())
+                    );
+                    newCondition.result.setLoopsMessage(
+                            stringBuilder.toString().length()
+                    );
+                }
+                if (stsDescriptionRules.strictEnd) newConditions.clear();
                 newConditions.add(newCondition);
             }
+            else {
+                stringBuilder.append(c);
+                textIterator.next();
+            }
 
-            chars++;
+            charNum++;
         }
         return newConditions;
     }
@@ -285,7 +344,30 @@ public class Condition {
         }
         return newConditions;
     }
+    private List<Condition> executeBlockFalseNumber(StsBlockFalseNumber stsBlockFalseNumber){
+        result.executeSaveData(
+                stsBlockFalseNumber.getSaveData(),
+                new ResultRegistryValue( stsBlockFalseNumber.getValue() )
+        );
+        result.setLoopsMessage(stsBlockFalseNumber.getValue());
+        return List.of(this);
+    }
+    private List<Condition> executeBlockNull(StsBlockNull stsBlockNull){
+        result.executeSaveData(
+                stsBlockNull.getSaveData(),
+                new ResultRegistryValue()
+        );
+        result.setLoopsMessage(0);
+        return List.of(this);
+    }
 
     public TextIterator getTextIterator() {return textIterator;}
     public Result getResult() {return result;}
+
+    public boolean equals(Condition condition) {
+        return this.textIterator.getText().equals(condition.textIterator.getText()) &&
+                this.textIterator.getCharNumber() == condition.textIterator.getCharNumber() &&
+                this.result.equals(condition.result) &&
+                this.stsBlock == condition.stsBlock;
+    }
 }
