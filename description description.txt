@@ -1,0 +1,51 @@
+[
++a          //add char
+-a          //remove char
++bcd        //add charS
+-bcd        //remove charS
+
+>a          //start with char
+<a          //end with char
+>abc        //start with one of the chars
+<abc        //end with one of the chars
+
+^>10        //min 10 char
+^<5         //max 5 char
+^8          //min and max 8 char
+
+@N          //text is number
+
+//custom system chars
+/d - all default chars
+/a - all chars from 0 to 127
+/A - all chars from 0 to 65535
+/e - uppercase English letters
+/E - lowercase English letters
+/l - uppercase and lowercase English letters
+/v - void chars: space, \t(tab), \n(enter)
+/N - numbers
+]
+
+
+
+[
++*A-*vc
+^>3
+^<10
+
+]
+
+
+0 - ()
+1 - []
+2 - {}
+3 - ""
+4 - ''
+5 - <>
+s - () [] {} "" ''
+S - () [] {} "" '' <>
+Q - "" ''
+q - скобки В ковычках пропускаются ['[[[[[)))({}}{']
+$\ - указывает что \ это спец символ (можно заменить на любой символ)
+F - не обробатывать варианты, в которых код-блок ВОЗМОЖНО закончился.
+    То есть блок завершился, только если обноружилась закрывающаяся скобка без открывающейся.
