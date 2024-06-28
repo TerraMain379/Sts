@@ -164,6 +164,18 @@ public class StsReader {
             textIterator.next();
             return new StsBlockNull(saveData);
         }
+        else if (c=='$'){
+            return new StsBlockLink(saveData,readSaveData(textIterator));
+        }
+        else if (c=='@'){
+            textIterator.next();
+            StringBuilder stringBuilder = new StringBuilder();
+            while (textIterator.hasNext()){
+                if (textIterator.next()=='>') break;
+                stringBuilder.append(c);
+            }
+            //return new
+        }
         else if (Character.isDigit(c)){
             return new StsBlockFalseNumber(saveData,textIterator.readInt());
         }
@@ -183,11 +195,12 @@ public class StsReader {
             if (Character.isDigit(textIterator.next())){
                 registryNum=textIterator.readInt();
             }
-            else {
+            else if (textIterator.getChar()!=':'){
                 registryNum = StsSaveData.getPathFromChar(textIterator.getChar());
                 textIterator.next();
             }
-            if (textIterator.getChar() == ':'){
+
+            if (textIterator.getChar()==':'){
                 if (textIterator.next() != '>') {
                     if (Character.isDigit(textIterator.getChar())){
                         valueNum=textIterator.readInt();

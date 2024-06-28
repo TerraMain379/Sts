@@ -20,6 +20,10 @@ public class ResultRegistry {
     }
     public void setElement(int num, ResultRegistryValue value){
         registryValues.set(loadElement(num),value);
+        for (int i = registryValues.size()-1; i >= 0; i--) {
+            if (getElement(i).isNull()) registryValues.remove(i);
+            else break;
+        }
     }
 
     private int loadElement(int num){
@@ -53,6 +57,9 @@ public class ResultRegistry {
 
     public List<ResultRegistryValue> getRegistryValues() {
         return registryValues;
+    }
+    public int getSize(){
+        return registryValues.size();
     }
 
     public ResultRegistry clone(){

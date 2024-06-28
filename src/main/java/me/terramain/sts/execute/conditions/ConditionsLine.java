@@ -51,17 +51,7 @@ public class ConditionsLine {
             }).toList();
             blockNumber++;
 
-            conditions=new ArrayList<>();
-            newConditions.forEach(newCondition -> {
-                boolean flag2 = true;
-                for (Condition condition : conditions) {
-                    if (condition.equals(newCondition)) {
-                        flag2 = false;
-                        break;
-                    }
-                }
-                if (flag2) conditions.add(newCondition);
-            });
+            conditions=newConditions;
         }
     }
 

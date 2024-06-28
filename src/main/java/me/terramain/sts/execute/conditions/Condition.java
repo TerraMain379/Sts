@@ -1,10 +1,12 @@
 package me.terramain.sts.execute.conditions;
 
 import me.terramain.sts.StsBlocks;
+import me.terramain.sts.StsSaveData;
 import me.terramain.sts.description.StsDescriptionRules;
 import me.terramain.sts.exceptions.StsException;
 import me.terramain.sts.execute.regesties.Result;
 import me.terramain.sts.execute.regesties.ResultRegistryValue;
+import me.terramain.sts.execute.regesties.ResultRegistryValueType;
 import me.terramain.sts.stsblocks.*;
 import me.terramain.textexecuter.TextIterator;
 
@@ -57,6 +59,9 @@ public class Condition {
         else if (stsBlock instanceof StsBlockNull stsBlockNull){
             return executeBlockNull(stsBlockNull);
         }
+        else if (stsBlock instanceof StsBlockLink stsBlockLink){
+            return executeBlockLink(stsBlockLink);
+        }
         else {
             //System.out.println("StsBlock not supported");
             StsException.say("StsBlock not supported");
@@ -70,13 +75,12 @@ public class Condition {
         String readText = textIterator.readStringFromLength(blockText.length());
         if (blockText.equals(readText)){
             result.executeSaveData(stsBlockText.getSaveData(),new ResultRegistryValue(readText));
+            return List.of(
+                    new Condition(nextStsBlock, textIterator, result)
+            );
         }
-        else {
-            result.setSuccess(false);
-        }
-        return List.of(
-                new Condition(nextStsBlock, textIterator, result)
-        );
+        result.setSuccess(false);
+        return new ArrayList<>();
     }
     private List<Condition> executeStsBlocks(StsBlocks stsBlocks){
         ConditionsLine conditionsLine = new ConditionsLine(
@@ -358,7 +362,31 @@ public class Condition {
                 new ResultRegistryValue()
         );
         result.setLoopsMessage(0);
-        return List.of(this);
+        return List.of(new Condition(nextStsBlock,textIterator,result));
+    }
+    private List<Condition> executeBlockLink(StsBlockLink stsBlockLink){
+        StsSaveData link = stsBlockLink.getLink();
+        ResultRegistryValue value = result.getValue(link.getRegistry(),link.getNumber());
+
+        if (value.getRegistryValueType() == ResultRegistryValueType.STRING){
+            String blockText = value.getString();
+            String readText = textIterator.readStringFromLength(blockText.length());
+            if (blockText.equals(readText)){
+                result.executeSaveData(stsBlockLink.getSaveData(),new ResultRegistryValue(readText));
+            }
+            else return new ArrayList<>();
+        }
+        else if (value.getRegistryValueType() == ResultRegistryValueType.INT){
+            result.setLoopsMessage(value.getInt());
+        }
+        else if (value.getRegistryValueType() == ResultRegistryValueType.BOOLEAN){
+            if (value.getBoolean()) result.setLoopsMessage(1);
+            else result.setLoopsMessage(0);
+        }
+
+        return List.of(
+                new Condition(nextStsBlock, textIterator, result)
+        );
     }
 
     public TextIterator getTextIterator() {return textIterator;}

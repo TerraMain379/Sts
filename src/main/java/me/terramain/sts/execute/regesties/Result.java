@@ -19,10 +19,19 @@ public class Result {
 
     public ResultRegisties getResultRegisties() {return resultRegisties;}
     public void setResultRegisties(ResultRegisties resultRegisties) {this.resultRegisties = resultRegisties;}
+
+    public ResultRegistryValue getValue(int registryNum, int valueNum){
+        return resultRegisties.getValue(registryNum,valueNum);
+    }
+    public void setValue(int registryNum, int valueNum, ResultRegistryValue value){
+        resultRegisties.setValue(registryNum,valueNum,value);
+    }
+
     public boolean isSuccess() {return isSuccess;}
     public void setSuccess(boolean success) {isSuccess = success;}
     public Integer getLoopsMessage() {return loopsMessage;}
     public void setLoopsMessage(int loopsMessage) {this.loopsMessage = loopsMessage;}
+
 
     public void executeSaveData(StsSaveData stsSaveData, ResultRegistryValue value){
         if (stsSaveData==null) return;

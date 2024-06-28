@@ -21,6 +21,10 @@ public class ResultRegisties {
     }
     public void setValue(int registryNum, int valueNum, ResultRegistryValue value){
         registries.get(loadElement(registryNum)).setElement(valueNum,value);
+        for (int i = registries.size()-1; i >= 0; i--) {
+            if (registries.get(i).getSize()==0) registries.remove(i);
+            else break;
+        }
     }
 
     private int loadElement(int num){

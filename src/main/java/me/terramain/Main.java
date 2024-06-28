@@ -12,10 +12,10 @@ public class Main {
         //blocks();
     }
     public static void execute(){
-        TextEditor stringBuilder = new TextEditor(TextHelper.readFile("sts.txt"));
+        TextEditor stringBuilder = new TextEditor(TextHelper.readFile("src\\main\\resources\\fanat\\sts\\text.txt"));
         stringBuilder.replaceChar('\n',' ');
         String text = stringBuilder.getText();
-        stringBuilder = new TextEditor(TextHelper.readFile("sts2.txt"));
+        stringBuilder = new TextEditor(TextHelper.readFile("src\\main\\resources\\fanat\\sts\\code.sts"));
         stringBuilder.stripLines();
         stringBuilder.removeChar('\n');
         String stsCode = stringBuilder.getText();
@@ -25,7 +25,7 @@ public class Main {
         }
     }
     public static void blocks(){
-        TextEditor stringBuilder = new TextEditor(TextHelper.readFile("sts2.txt"));
+        TextEditor stringBuilder = new TextEditor(TextHelper.readFile("sts2(fun).txt"));
         stringBuilder.stripLines();
         stringBuilder.removeChar('\n');
         String stsCode = stringBuilder.getText();

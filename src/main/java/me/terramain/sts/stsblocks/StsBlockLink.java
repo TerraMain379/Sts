@@ -11,6 +11,10 @@ public class StsBlockLink extends StsBlock{
         this.link = link;
     }
 
+    public StsSaveData getLink() {
+        return link;
+    }
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder("StsBlockLink:\n");
