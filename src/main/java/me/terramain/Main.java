@@ -15,11 +15,8 @@ public class Main {
         TextEditor stringBuilder = new TextEditor(TextHelper.readFile("src\\main\\resources\\fanat\\sts\\text.txt"));
         stringBuilder.replaceChar('\n',' ');
         String text = stringBuilder.getText();
-        stringBuilder = new TextEditor(TextHelper.readFile("src\\main\\resources\\fanat\\sts\\code.sts"));
-        stringBuilder.stripLines();
-        stringBuilder.removeChar('\n');
-        String stsCode = stringBuilder.getText();
-        for (Result result : Sts.executeText(text, stsCode)) {
+        String stsCode = TextHelper.readFile("src\\main\\resources\\fanat\\sts\\code.sts");
+        for (Result result : Sts.executeText(text, stsCode, true)) {
             System.out.println("---------------------------------------------");
             System.out.println(result);
         }

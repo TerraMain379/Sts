@@ -7,7 +7,9 @@ public class TextHelper {
         BufferedReader bufferedReader;
         try {
              bufferedReader = new BufferedReader(new FileReader(file));
-        } catch (FileNotFoundException e) {throw new RuntimeException(e);}
+        } catch (FileNotFoundException e) {
+            return null;
+        }
 
         StringBuilder stringBuilder = new StringBuilder();
         bufferedReader.lines().forEach(s -> {

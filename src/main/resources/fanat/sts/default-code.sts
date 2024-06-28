@@ -1,0 +1,19 @@
+/cname{
+    [>\l+\l\N_]
+}/
+/ccode{
+    {sQq$\F}
+}/
+/void{
+    [^>1+\v]
+}/
+/vvoid{
+    ?{/void/}
+}/
+/security-level{
+    |{
+        ("public")
+        ("protected")
+        ("private")
+    }
+}/
