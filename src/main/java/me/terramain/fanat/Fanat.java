@@ -1,15 +1,11 @@
 package me.terramain.fanat;
 
+import me.terramain.fanat.reader.FanatFile;
+
 public class Fanat {
-    public static final String RESOURCES = "src\\main\\resources\\fanat\\";
-    public static final String STS_EXAMPLES = RESOURCES+"sts\\";
+    public static final String resources = "src\\main\\resources\\fanat";
 
     public static void main(String[] args) {
-        System.out.println(
-                FanatReader.executeStsRules(
-                        RESOURCES+"projects\\Main.fan",
-                        "fanat-file.sts"
-                )
-        );
+
     }
 }

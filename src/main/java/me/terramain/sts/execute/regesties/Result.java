@@ -42,6 +42,15 @@ public class Result {
         );
     }
 
+    public void foreach(IResultForeach iResultForeach){
+        for (int i = 0; i < resultRegisties.getRegistries().size(); i++) {
+            ResultRegistry resultRegistry = resultRegisties.getRegistries().get(i);
+            for (int j = 0; j < resultRegistry.getRegistryValues().size(); j++) {
+                iResultForeach.foreach(resultRegistry.getRegistryValues().get(j),i,j);
+            }
+        }
+    }
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder("result:\n");
