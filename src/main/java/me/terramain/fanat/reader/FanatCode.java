@@ -20,7 +20,7 @@ public class FanatCode {
     public void execute(){
         Result result = StsLogic.executeSts(code,"code");
         result.foreach((value, registryNum, valueNum) -> {
-
+            System.out.println("<"+registryNum+":"+valueNum+"> "+value.toString());
         });
     }
 }

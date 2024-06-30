@@ -180,7 +180,18 @@ public class StsReader {
             return new StsBlockFalseNumber(saveData,textIterator.readInt());
         }
         else {
-            StsException.say("Wrong char ('"+c+"') from sts-code. Position " + textIterator.getCharNumber());
+            StsException.say(
+                    "Wrong char (" +
+                            textIterator.getPreviousCharAt(3)+
+                            textIterator.getPreviousCharAt(2)+
+                            textIterator.getPreviousCharAt(1)+
+                            "'" + c + "'" +
+                            textIterator.getNextCharAt(1) +
+                            textIterator.getNextCharAt(2) +
+                            textIterator.getNextCharAt(1) +
+                            ") from sts-code. Position " +
+                            textIterator.getCharNumber()
+            );
         }
         return null;
     }

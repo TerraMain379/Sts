@@ -1,8 +1,16 @@
 *{
     "class"/void/
-    /cname/
-    ":"
-    /cname/
-    "<-"
-    /cname/
+    _<F:>/cname/
+    ?{
+        /vvoid/":"/vvoid/
+        _<f:1>/cname/
+    }
+    ?{
+        /vvoid/"<-"/vvoid/
+        _<f:2>/cname/
+    }
+    /vvoid/
+    "{"
+        _<f:3>/ccode/
+    "}"
 }

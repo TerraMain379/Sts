@@ -11,8 +11,10 @@ public class FanatProject {
 
     public FanatProject(String projectPath){
         this.projectPath = projectPath;
+        this.files = new ArrayList<>();
+        this.codeFiles = new ArrayList<>();
         for (FanatFile fanatFile : getFilesFromFolder(projectPath)) {
-            if (fanatFile.extension.equals("fan")) codeFiles.add(fanatFile);
+            if (fanatFile.getExtension().equals("fan")) codeFiles.add(fanatFile);
             else files.add(fanatFile);
         }
     }
@@ -22,7 +24,7 @@ public class FanatProject {
         List<FanatFile> files = new ArrayList<>();
         for (File file : folder.listFiles()) {
             if (file.isDirectory()) {
-                files.addAll(getFilesFromFolder(folderPath));
+                files.addAll(getFilesFromFolder(file.getPath()));
             } else {
                 files.add(new FanatFile(file.getAbsolutePath()));
             }
