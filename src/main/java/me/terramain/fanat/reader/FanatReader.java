@@ -1,12 +1,10 @@
 package me.terramain.fanat.reader;
 
+import me.terramain.fanat.reader.structure.FanatProject;
+
 public class FanatReader {
+    public FanatProject fanatProject;
     public FanatReader(String projectPath){
-        FanatProject fanatProject = new FanatProject(projectPath);
-        FanatCode fanatCode = new FanatCode();
-        for (FanatFile codeFile : fanatProject.codeFiles) {
-            fanatCode.addCode(codeFile.read());
-        }
-        fanatCode.execute();
+        this.fanatProject = new FanatProject(projectPath);
     }
 }

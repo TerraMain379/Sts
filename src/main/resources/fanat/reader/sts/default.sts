@@ -1,12 +1,24 @@
 /cname{
     [>\l+\l\N_]
 }/
+/fnpath{
+    *{
+        /cname/"."
+    }
+    /cname/
+}/
 /void{
-    [+\v^1]
+    [+\v^>1]
 }/
 /vvoid{
-    ?{/void/}
+    ?{[+\v]}
 }/
 /ccode{
     {sQq$\F}
+}/
+/sec-level{
+    |{
+       "public"
+       "private"
+    }
 }/

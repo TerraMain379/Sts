@@ -1,5 +1,6 @@
 package me.terramain;
 
+import me.terramain.fanat.Fanat;
 import me.terramain.sts.Sts;
 import me.terramain.sts.StsReader;
 import me.terramain.sts.execute.regesties.Result;
@@ -8,8 +9,8 @@ import me.terramain.textexecuter.TextHelper;
 
 public class Main {
     public static void main(String[] args) {
-        execute();
-        //blocks();
+        //execute();
+        blocks();
     }
     public static void execute(){
         TextEditor stringBuilder = new TextEditor(TextHelper.readFile("src\\main\\resources\\fanat\\sts\\text.txt"));
@@ -22,7 +23,7 @@ public class Main {
         }
     }
     public static void blocks(){
-        TextEditor stringBuilder = new TextEditor(TextHelper.readFile("sts2(fun).txt"));
+        TextEditor stringBuilder = new TextEditor(TextHelper.readFile(Fanat.resources+"\\reader\\sts\\code.sts"));
         stringBuilder.stripLines();
         stringBuilder.removeChar('\n');
         String stsCode = stringBuilder.getText();

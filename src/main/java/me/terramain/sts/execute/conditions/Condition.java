@@ -62,6 +62,9 @@ public class Condition {
         else if (stsBlock instanceof StsBlockLink stsBlockLink){
             return executeBlockLink(stsBlockLink);
         }
+        else if (stsBlock instanceof StsBlockSystem stsBlockSystem){
+            return executeBlockSystem(stsBlockSystem);
+        }
         else {
             //System.out.println("StsBlock not supported");
             StsException.say("StsBlock not supported");
@@ -387,6 +390,20 @@ public class Condition {
         return List.of(
                 new Condition(nextStsBlock, textIterator, result)
         );
+    }
+    private List<Condition> executeBlockSystem(StsBlockSystem stsBlockSystem){
+        if (stsBlockSystem.getType().equals("end")){
+            if (textIterator.hasNext()){
+                result.setSuccess(false);
+                return new ArrayList<>();
+            }
+            else {
+                return List.of(
+                        new Condition(nextStsBlock, textIterator, result)
+                );
+            }
+        }
+        return new ArrayList<>();
     }
 
     public TextIterator getTextIterator() {return textIterator;}

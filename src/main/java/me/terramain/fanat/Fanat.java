@@ -1,6 +1,6 @@
 package me.terramain.fanat;
 
-import me.terramain.fanat.reader.FanatFile;
+
 import me.terramain.fanat.reader.FanatReader;
 
 public class Fanat {
@@ -8,5 +8,6 @@ public class Fanat {
 
     public static void main(String[] args) {
         FanatReader fanatReader = new FanatReader(resources);
+        System.out.println(fanatReader.fanatProject.toString());
     }
 }

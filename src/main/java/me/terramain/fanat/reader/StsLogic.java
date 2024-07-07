@@ -12,7 +12,7 @@ public class StsLogic {
     public static final String defaultSts = TextHelper.readFile(promts+"\\default.sts");
 
     public static Result executeSts(String text, String stsName){
-        String stsCode = defaultSts + TextHelper.readFile(stsName+".sts");
+        String stsCode = defaultSts + TextHelper.readFile(promts+"\\"+stsName+".sts");
         List<Result> results = Sts.executeText(text,stsCode,true);
         if (results.size()==0) return null;
         return results.get(0);

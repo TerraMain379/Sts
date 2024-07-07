@@ -4,6 +4,7 @@ import me.terramain.textexecuter.StaticTextEditor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ResultRegisties {
     private List<ResultRegistry> registries;
@@ -57,7 +58,6 @@ public class ResultRegisties {
     }
 
 
-
     public List<ResultRegistry> getRegistries() {
         return registries;
     }
@@ -68,6 +68,10 @@ public class ResultRegisties {
             registries.add(resultRegistry.clone());
         });
         return new ResultRegisties(new ArrayList<>(registries));
+    }
+
+    public void foreach(Consumer<? super ResultRegistry> action){
+        registries.forEach(action);
     }
 
     @Override

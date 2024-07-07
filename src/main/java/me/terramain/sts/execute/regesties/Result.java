@@ -46,7 +46,10 @@ public class Result {
         for (int i = 0; i < resultRegisties.getRegistries().size(); i++) {
             ResultRegistry resultRegistry = resultRegisties.getRegistries().get(i);
             for (int j = 0; j < resultRegistry.getRegistryValues().size(); j++) {
-                iResultForeach.foreach(resultRegistry.getRegistryValues().get(j),i,j);
+                ResultRegistryValue value = resultRegistry.getElement(j);
+                if (!value.isNull()) {
+                    iResultForeach.foreach(value, i, j);
+                }
             }
         }
     }
@@ -85,5 +88,9 @@ public class Result {
         } catch (IndexOutOfBoundsException e){
             return false;
         }
+    }
+
+    public ResultRegistry getRegistry(int number) {
+        return resultRegisties.getRegistries().get(number);
     }
 }

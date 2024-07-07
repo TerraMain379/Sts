@@ -70,6 +70,15 @@ public class ResultRegistry {
         return new ResultRegistry(values);
     }
 
+    public void foreach(IResultRegistryForeach iResultRegistryForeach){
+        for (int i = 0; i < registryValues.size(); i++) {
+            ResultRegistryValue value = registryValues.get(i);
+            if (!value.isNull()){
+                iResultRegistryForeach.foreach(value, i);
+            }
+        }
+    }
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder("registry:\n");

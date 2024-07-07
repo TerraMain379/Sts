@@ -168,13 +168,20 @@ public class StsReader {
             return new StsBlockLink(saveData,readSaveData(textIterator));
         }
         else if (c=='@'){
-            textIterator.next();
             StringBuilder stringBuilder = new StringBuilder();
             while (textIterator.hasNext()){
-                if (textIterator.next()=='>') break;
-                stringBuilder.append(c);
+                if (textIterator.next()==';') break;
+                stringBuilder.append(textIterator.getChar());
             }
-            //return new
+            textIterator.next();
+            return new StsBlockSystem(saveData,stringBuilder.toString());
+        }
+        else if (c=='`'){
+            while (textIterator.hasNext()){
+                if (textIterator.next()=='`') break;
+            }
+            textIterator.next();
+            return null;
         }
         else if (Character.isDigit(c)){
             return new StsBlockFalseNumber(saveData,textIterator.readInt());
@@ -182,6 +189,9 @@ public class StsReader {
         else {
             StsException.say(
                     "Wrong char (" +
+                            textIterator.getPreviousCharAt(6)+
+                            textIterator.getPreviousCharAt(5)+
+                            textIterator.getPreviousCharAt(4)+
                             textIterator.getPreviousCharAt(3)+
                             textIterator.getPreviousCharAt(2)+
                             textIterator.getPreviousCharAt(1)+
