@@ -9,10 +9,15 @@ import java.util.Map;
 
 public class StsReader {
     private final StsBlocks stsBlocks;
-    private final Map<String,StsBlocks> schemes;
+    private Map<String,StsBlocks> schemes;
     public StsReader(String text){
         TextIterator textIterator = new TextIterator(text);
         this.schemes = new HashMap<>();
+        this.stsBlocks = readBlocks(textIterator);
+    }
+    private StsReader(String text, Map<String,StsBlocks> schemes){
+        TextIterator textIterator = new TextIterator(text);
+        this.schemes = schemes;
         this.stsBlocks = readBlocks(textIterator);
     }
 
@@ -155,7 +160,7 @@ public class StsReader {
                 }
             }
             else {
-                StsReader stsReader = new StsReader(codeBuilder.toString());
+                StsReader stsReader = new StsReader(codeBuilder.toString(),schemes);
                 schemes.put(nameBuilder.toString(),stsReader.stsBlocks);
                 return null;
             }

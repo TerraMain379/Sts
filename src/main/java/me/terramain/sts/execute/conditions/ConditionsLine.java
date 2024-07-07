@@ -33,7 +33,11 @@ public class ConditionsLine {
         execute(new Result());
     }
     public void execute(Result result){
-        conditions.add(new Condition(stsBlocks.get(0),textIterator.clone(),result));
+        try {
+            conditions.add(new Condition(stsBlocks.get(0), textIterator.clone(), result));
+        } catch (NullPointerException e){
+            e.printStackTrace();
+        }
         boolean flag = true;
         int blockNumber = 0;
         while (flag){

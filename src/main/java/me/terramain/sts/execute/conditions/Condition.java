@@ -86,6 +86,9 @@ public class Condition {
         return new ArrayList<>();
     }
     private List<Condition> executeStsBlocks(StsBlocks stsBlocks){
+        if (stsBlocks==null) return List.of(new Condition(
+                nextStsBlock,textIterator,result
+        ));
         ConditionsLine conditionsLine = new ConditionsLine(
                 stsBlocks,
                 new ArrayList<>(),
@@ -357,7 +360,7 @@ public class Condition {
                 new ResultRegistryValue( stsBlockFalseNumber.getValue() )
         );
         result.setLoopsMessage(stsBlockFalseNumber.getValue());
-        return List.of(this);
+        return List.of(new Condition(nextStsBlock,textIterator,result));
     }
     private List<Condition> executeBlockNull(StsBlockNull stsBlockNull){
         result.executeSaveData(
