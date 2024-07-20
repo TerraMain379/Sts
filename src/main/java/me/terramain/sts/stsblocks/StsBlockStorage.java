@@ -23,10 +23,12 @@ public class StsBlockStorage extends StsBlock {
                 saveData.toString(),
                 2
         ));
-        stringBuilder.append(TextEditor.addSpacesToLines(
-                stsBlocks.toString(),
-                2
-        ));
+        if (stsBlocks!=null) {
+            stringBuilder.append(TextEditor.addSpacesToLines(
+                    stsBlocks.toString(),
+                    2
+            ));
+        }
         return stringBuilder.toString();
     }
 }
