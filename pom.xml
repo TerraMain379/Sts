@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>me.terramain</groupId>
-  <artifactId>Sts</artifactId>
+  <artifactId>sts</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>Sts</name>
+  <name>sts</name>
   <url>http://maven.apache.org</url>
 
   <properties>
