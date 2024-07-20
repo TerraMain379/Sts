@@ -395,8 +395,13 @@ public class Condition {
         );
     }
     private List<Condition> executeBlockSystem(StsBlockSystem stsBlockSystem){
-        if (stsBlockSystem.getType().equals("end")){
-            if (textIterator.hasNext()){
+        String type = stsBlockSystem.getType();
+        if (type.equals("end") || type.equals("endc")){
+            boolean ifb =
+                    type.equals("end") ?
+                            textIterator.hasGetChar() :
+                            textIterator.getIndex()==textIterator.getText().length();
+            if (ifb){
                 result.setSuccess(false);
                 return new ArrayList<>();
             }
