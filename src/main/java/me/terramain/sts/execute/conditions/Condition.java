@@ -102,13 +102,13 @@ public class Condition {
         return newConditions;
     }
     private List<Condition> executeBlockStorage(StsBlockStorage stsBlockStorage){
-        int startResultNum = textIterator.getCharNumber();
+        int startResultNum = textIterator.getIndex();
 
         List<Condition> newConditions = executeStsBlocks(stsBlockStorage.getStsBlocks());
 
         if (stsBlockStorage.getSaveData()!=null){
             newConditions.forEach(newCondition -> {
-                int endResultNum = newCondition.textIterator.getCharNumber();
+                int endResultNum = newCondition.textIterator.getIndex();
                 newCondition.result.executeSaveData(
                         stsBlockStorage.getSaveData(),
                         new ResultRegistryValue(
@@ -414,7 +414,7 @@ public class Condition {
 
     public boolean equals(Condition condition) {
         return this.textIterator.getText().equals(condition.textIterator.getText()) &&
-                this.textIterator.getCharNumber() == condition.textIterator.getCharNumber() &&
+                this.textIterator.getIndex() == condition.textIterator.getIndex() &&
                 this.result.equals(condition.result) &&
                 this.stsBlock == condition.stsBlock;
     }

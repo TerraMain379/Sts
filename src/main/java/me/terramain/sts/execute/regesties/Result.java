@@ -1,7 +1,7 @@
 package me.terramain.sts.execute.regesties;
 
 import me.terramain.sts.StsSaveData;
-import me.terramain.textexecuter.StaticTextEditor;
+import me.terramain.textexecuter.TextEditor;
 
 public class Result {
     private ResultRegisties resultRegisties;
@@ -57,11 +57,11 @@ public class Result {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder("result:\n");
-        stringBuilder.append(StaticTextEditor.addSpacesToLines(
+        stringBuilder.append(TextEditor.addSpacesToLines(
                 "isSuccess: "+isSuccess+"\n",
                 2
         ));
-        stringBuilder.append(StaticTextEditor.addSpacesToLines(
+        stringBuilder.append(TextEditor.addSpacesToLines(
                 resultRegisties.toString(),
                 2
         ));

@@ -194,18 +194,18 @@ public class StsReader {
         else {
             StsException.say(
                     "Wrong char (" +
-                            textIterator.getPreviousCharAt(6)+
-                            textIterator.getPreviousCharAt(5)+
-                            textIterator.getPreviousCharAt(4)+
-                            textIterator.getPreviousCharAt(3)+
-                            textIterator.getPreviousCharAt(2)+
-                            textIterator.getPreviousCharAt(1)+
+                            textIterator.getPreviousAt(6)+
+                            textIterator.getPreviousAt(5)+
+                            textIterator.getPreviousAt(4)+
+                            textIterator.getPreviousAt(3)+
+                            textIterator.getPreviousAt(2)+
+                            textIterator.getPreviousAt(1)+
                             "'" + c + "'" +
-                            textIterator.getNextCharAt(1) +
-                            textIterator.getNextCharAt(2) +
-                            textIterator.getNextCharAt(1) +
+                            textIterator.getNextAt(1) +
+                            textIterator.getNextAt(2) +
+                            textIterator.getNextAt(1) +
                             ") from sts-code. Position " +
-                            textIterator.getCharNumber()
+                            textIterator.getIndex()
             );
         }
         return null;

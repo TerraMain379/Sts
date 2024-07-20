@@ -4,7 +4,7 @@ import me.terramain.sts.exceptions.StsException;
 import me.terramain.sts.execute.conditions.Condition;
 import me.terramain.sts.execute.conditions.ConditionsLine;
 import me.terramain.sts.execute.regesties.Result;
-import me.terramain.textexecuter.TextEditor;
+import me.terramain.textexecuter.TextBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +23,10 @@ public class Sts {
 
     public static List<Result> executeText(String text, String stsCode, boolean ignoreEnters){
         if (ignoreEnters){
-            TextEditor textEditor = new TextEditor(stsCode);
-            textEditor.stripLines();
-            textEditor.removeChar('\n');
-            stsCode = textEditor.getText();
+            TextBuilder textBuilder = new TextBuilder(stsCode);
+            textBuilder.stripLines();
+            textBuilder.removeChar('\n');
+            stsCode = textBuilder.getText();
         }
         StsReader stsReader = new StsReader(stsCode);
         ConditionsLine conditionsLine = new ConditionsLine(stsReader.getStsBlocks(),text);

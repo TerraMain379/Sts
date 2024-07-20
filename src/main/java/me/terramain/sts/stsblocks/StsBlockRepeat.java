@@ -2,7 +2,7 @@ package me.terramain.sts.stsblocks;
 
 import me.terramain.sts.StsBlocks;
 import me.terramain.sts.StsSaveData;
-import me.terramain.textexecuter.StaticTextEditor;
+import me.terramain.textexecuter.TextEditor;
 
 public class StsBlockRepeat extends StsBlockStorage{
     private StsBlock loopCounterBlock;
@@ -18,18 +18,18 @@ public class StsBlockRepeat extends StsBlockStorage{
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder("StsBlockRepeat:\n");
-        if (saveData!=null) stringBuilder.append(StaticTextEditor.addSpacesToLines(
+        if (saveData!=null) stringBuilder.append(TextEditor.addSpacesToLines(
                 saveData.toString(),
                 2
         ));
         if (loopCounterBlock!=null) {
             stringBuilder.append("  loopCounterBlock:\n");
-            stringBuilder.append(StaticTextEditor.addSpacesToLines(
+            stringBuilder.append(TextEditor.addSpacesToLines(
                     loopCounterBlock.toString(),
                     4
             ));
         }
-        stringBuilder.append(StaticTextEditor.addSpacesToLines(
+        stringBuilder.append(TextEditor.addSpacesToLines(
                 stsBlocks.toString(),
                 2
         ));

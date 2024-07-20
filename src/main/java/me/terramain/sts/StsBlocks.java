@@ -1,7 +1,7 @@
 package me.terramain.sts;
 
 import me.terramain.sts.stsblocks.StsBlock;
-import me.terramain.textexecuter.StaticTextEditor;
+import me.terramain.textexecuter.TextEditor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class StsBlocks extends ArrayList<StsBlock> {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder("stsBlocks:\n");
         for (StsBlock stsBlock:this){
-            stringBuilder.append(StaticTextEditor.addSpacesToLines(
+            stringBuilder.append(TextEditor.addSpacesToLines(
                     stsBlock.toString(),
                     2
             ));

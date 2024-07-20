@@ -1,7 +1,7 @@
 package me.terramain.sts.stsblocks;
 
 import me.terramain.sts.StsSaveData;
-import me.terramain.textexecuter.StaticTextEditor;
+import me.terramain.textexecuter.TextEditor;
 
 public class StsBlockFalseNumber extends StsBlock {
     protected int value;
@@ -18,7 +18,7 @@ public class StsBlockFalseNumber extends StsBlock {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder("StsBlockFalseNumber:\n");
-        if (saveData!=null) stringBuilder.append(StaticTextEditor.addSpacesToLines(
+        if (saveData!=null) stringBuilder.append(TextEditor.addSpacesToLines(
                 saveData.toString(),
                 2
         ));

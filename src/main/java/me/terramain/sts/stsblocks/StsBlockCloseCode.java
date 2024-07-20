@@ -1,7 +1,7 @@
 package me.terramain.sts.stsblocks;
 
 import me.terramain.sts.StsSaveData;
-import me.terramain.textexecuter.StaticTextEditor;
+import me.terramain.textexecuter.TextEditor;
 import me.terramain.textexecuter.TextIterator;
 
 public class StsBlockCloseCode extends StsBlockText{
@@ -81,7 +81,7 @@ public class StsBlockCloseCode extends StsBlockText{
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder("StsBlockCloseCode:\n");
-        if (saveData!=null) stringBuilder.append(StaticTextEditor.addSpacesToLines(
+        if (saveData!=null) stringBuilder.append(TextEditor.addSpacesToLines(
                 saveData.toString(),
                 2
         ));

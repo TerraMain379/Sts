@@ -1,6 +1,6 @@
 package me.terramain.sts.execute.regesties;
 
-import me.terramain.textexecuter.StaticTextEditor;
+import me.terramain.textexecuter.TextEditor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,12 +82,12 @@ public class ResultRegistry {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder("registry:\n");
-        stringBuilder.append(StaticTextEditor.addSpacesToLines(
+        stringBuilder.append(TextEditor.addSpacesToLines(
                 "registryValues:\n",
                 2
         ));
         for (int i = 0; i < registryValues.size(); i++) {
-            stringBuilder.append(StaticTextEditor.addSpacesToLines(
+            stringBuilder.append(TextEditor.addSpacesToLines(
                     i+": "+registryValues.get(i).toString(),
                     4
             ));

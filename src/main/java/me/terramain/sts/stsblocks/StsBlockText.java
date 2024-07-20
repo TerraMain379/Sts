@@ -1,7 +1,7 @@
 package me.terramain.sts.stsblocks;
 
 import me.terramain.sts.StsSaveData;
-import me.terramain.textexecuter.StaticTextEditor;
+import me.terramain.textexecuter.TextEditor;
 
 public class StsBlockText extends StsBlock{
     protected StringBuilder stringBuilder;
@@ -34,7 +34,7 @@ public class StsBlockText extends StsBlock{
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder("StsBlockText:\n");
-        if (saveData!=null) stringBuilder.append(StaticTextEditor.addSpacesToLines(
+        if (saveData!=null) stringBuilder.append(TextEditor.addSpacesToLines(
                 saveData.toString(),
                 2
         ));
